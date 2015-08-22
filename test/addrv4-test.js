@@ -44,4 +44,48 @@ describe('addrv4', function(){
       assert.deepEqual(2130706433, new Addr('127.0.0.1').toInt());
     });
   });
+
+  describe('#equals', function(){
+    describe('with the same address and prefix', function(){
+      it('returns true', function(){
+        assert(
+          new Addr('127.0.0.1/16')
+            .equals(new Addr(2130706433, 16))
+        );
+      });
+    });
+
+    describe('with a different address', function(){
+      it('returns false', function(){
+        assert(
+          !new Addr('127.0.0.1/16')
+            .equals(new Addr(2000000000, 16))
+        );
+      });
+    });
+
+    describe('with a different prefix', function(){
+      it('returns false', function(){
+        assert(
+          !new Addr('127.0.0.1/16')
+            .equals(new Addr(2130706433, 15))
+        );
+      });
+    });
+
+    describe('with a non Addr', function(){
+      it('returns false', function(){
+        assert(!new Addr('127.0.0.1/16').equals(42));
+      });
+    });
+  });
+
+  describe('#netmask()', function(){
+    it('returns the Addr of the mask', function(){
+      assert(
+        new Addr('1.1.1.1/22').netmask()
+          .equals(new Addr('255.255.252.0'))
+      );
+    });
+  });
 });
