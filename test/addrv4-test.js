@@ -5,6 +5,62 @@ var assert = require('assert')
   ;
 
 describe('addrv4', function(){
+  describe('constructor', function(){
+    describe('with a valid dotted IP', function(){
+      it('succeeds', function(){
+        assert(new Addr('1.1.1.1'));
+      });
+    });
+
+    describe('with a valid CIDR', function(){
+      it('succeeds', function(){
+        assert(new Addr('1.1.1.1/8'));
+      });
+    });
+
+    describe('with a valid integer', function(){
+      it('succeeds', function(){
+        assert(new Addr(128));
+      });
+    });
+
+    describe('with an invalid byte', function(){
+      it('throws an error', function(){
+        assert.throws(function(){ new Addr('1.256.1.1'); });
+      });
+    });
+
+    describe('with a cidr prefix out of range', function(){
+      it('throws an error', function(){
+        assert.throws(function(){ new Addr('1.1.1.1/35'); });
+      });
+    });
+
+    describe('with a negative integer', function(){
+      it('throws an error', function(){
+        assert.throws(function(){ new Addr(-128); });
+      });
+    });
+
+    describe('with a 64 bit integer', function(){
+      it('throws an error', function(){
+        assert.throws(function(){ new Addr(0xFFFFFFFF + 1); });
+      });
+    });
+
+    describe('with a negative prefix', function(){
+      it('throws an error', function(){
+        assert.throws(function(){ new Addr(256, -24); });
+      });
+    });
+
+    describe('with a prefix more than 32 bits', function(){
+      it('throws an error', function(){
+        assert.throws(function(){ new Addr(256, 35); });
+      });
+    });
+  });
+
   describe('#octets', function(){
     describe('with a string', function(){
       it('returns the parsed octets', function(){
