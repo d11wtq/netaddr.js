@@ -45,6 +45,12 @@ describe('addrv4', function(){
     });
   });
 
+  describe('#toString()', function(){
+    it('returns the dotted notation with the prefix', function(){
+      assert.equal('127.0.0.1/18', new Addr(2130706433, 18).toString());
+    });
+  });
+
   describe('#equals', function(){
     describe('with the same address and prefix', function(){
       it('returns true', function(){
@@ -82,9 +88,18 @@ describe('addrv4', function(){
 
   describe('#netmask()', function(){
     it('returns the Addr of the mask', function(){
-      assert(
-        new Addr('1.1.1.1/22').netmask()
-          .equals(new Addr('255.255.252.0'))
+      assert.equal(
+        '255.255.252.0/32',
+        new Addr('1.1.1.1/22').netmask().toString()
+      );
+    });
+  });
+
+  describe('#network()', function(){
+    it('returns the Addr of the network', function(){
+      assert.equal(
+        '10.3.0.0/32',
+        new Addr('10.3.0.1/16').network().toString()
       );
     });
   });
