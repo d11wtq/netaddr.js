@@ -87,20 +87,89 @@ describe('addrv4', function(){
   });
 
   describe('#netmask()', function(){
-    it('returns the Addr of the mask', function(){
-      assert.equal(
-        '255.255.252.0/32',
-        new Addr('1.1.1.1/22').netmask().toString()
-      );
+    describe('at prefix zero', function(){
+      it('returns the Addr of the mask', function(){
+        assert.equal(
+          '0.0.0.0/32',
+          new Addr('1.1.1.1/0').netmask().toString()
+        );
+      });
+    });
+
+    describe('at prefix 32', function(){
+      it('returns the Addr of the mask', function(){
+        assert.equal(
+          '255.255.255.255/32',
+          new Addr('1.1.1.1/32').netmask().toString()
+        );
+      });
+    });
+
+    describe('at prefix 1-31', function(){
+      it('returns the Addr of the mask', function(){
+        assert.equal(
+          '255.255.252.0/32',
+          new Addr('1.1.1.1/22').netmask().toString()
+        );
+      });
     });
   });
 
   describe('#network()', function(){
-    it('returns the Addr of the network', function(){
-      assert.equal(
-        '10.3.0.0/32',
-        new Addr('10.3.0.1/16').network().toString()
-      );
+    describe('at prefix zero', function(){
+      it('returns the Addr of the network', function(){
+        assert.equal(
+          '0.0.0.0/32',
+          new Addr('1.1.1.1/0').network().toString()
+        );
+      });
+    });
+
+    describe('at prefix 32', function(){
+      it('returns the Addr of the network', function(){
+        assert.equal(
+          '1.1.1.1/32',
+          new Addr('1.1.1.1/32').network().toString()
+        );
+      });
+    });
+
+    describe('at prefix 1-31', function(){
+      it('returns the Addr of the network', function(){
+        assert.equal(
+          '10.3.0.0/32',
+          new Addr('10.3.0.1/16').network().toString()
+        );
+      });
+    });
+  });
+
+  describe('#broadcast', function(){
+    describe('at prefix zero', function(){
+      it('returns the Addr of the broadcast address', function(){
+        assert.equal(
+          '255.255.255.255/32',
+          new Addr('1.1.1.1/0').broadcast().toString()
+        );
+      });
+    });
+
+    describe('at prefix 32', function(){
+      it('returns the Addr of the broadcast address', function(){
+        assert.equal(
+          '1.1.1.1/32',
+          new Addr('1.1.1.1/32').broadcast().toString()
+        );
+      });
+    });
+
+    describe('at prefix 1-31', function(){
+      it('returns the Addr of the broadcast address', function(){
+        assert.equal(
+          '10.3.255.255/32',
+          new Addr('10.3.0.1/16').broadcast().toString()
+        );
+      });
     });
   });
 });
