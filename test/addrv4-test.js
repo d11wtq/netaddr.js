@@ -192,4 +192,33 @@ describe('addrv4', function(){
       });
     });
   });
+
+  describe('#intersect()', function(){
+    describe('with an Addr inside the network range', function(){
+      it('returns the other Addr', function(){
+        assert.equal(
+          '10.0.3.0/24',
+          new Addr('10.0.0.0/16').intersect(new Addr('10.0.3.0/24')).toString()
+        );
+      });
+    });
+
+    describe('with an Addr larger than the network range', function(){
+      it('returns self', function(){
+        assert.equal(
+          '10.0.3.0/24',
+          new Addr('10.0.3.0/24').intersect(new Addr('10.0.0.0/16')).toString()
+        );
+      });
+    });
+
+    describe('with an Addr outside the network range', function(){
+      it('returns undefined', function(){
+        assert.equal(
+          'undefined',
+          typeof new Addr('10.0.0.0/24').intersect(new Addr('10.3.0.0/24'))
+        );
+      });
+    });
+  });
 });
