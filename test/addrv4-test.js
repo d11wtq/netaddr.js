@@ -221,4 +221,42 @@ describe('addrv4', function(){
       });
     });
   });
+
+  describe('#increment()', function(){
+    describe('with the maximum address', function(){
+      it('throws an error', function(){
+        assert.throws(function(){
+          new Addr('255.255.255.255/24').increment();
+        });
+      });
+    });
+
+    describe('with an incrementable address', function(){
+      it('returns the next address', function(){
+        assert.equal(
+          '10.0.2.0/24',
+          new Addr('10.0.1.255/24').increment().toString()
+        );
+      });
+    });
+  });
+
+  describe('#decrement()', function(){
+    describe('with the minimum address', function(){
+      it('throws an error', function(){
+        assert.throws(function(){
+          new Addr('0.0.0.0/24').decrement();
+        });
+      });
+    });
+
+    describe('with an decrementable address', function(){
+      it('returns the previous address', function(){
+        assert.equal(
+          '10.0.1.255/24',
+          new Addr('10.0.2.0/24').decrement().toString()
+        );
+      });
+    });
+  });
 });
