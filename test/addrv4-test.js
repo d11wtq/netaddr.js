@@ -38,4 +38,10 @@ describe('addrv4', function(){
       });
     });
   });
+
+  describe('#toInt()', function(){
+    it('returns the numeric value', function(){
+      assert.deepEqual(2130706433, new Addr('127.0.0.1').toInt());
+    });
+  });
 });
