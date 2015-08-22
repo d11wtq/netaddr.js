@@ -172,4 +172,24 @@ describe('addrv4', function(){
       });
     });
   });
+
+  describe('#contains()', function(){
+    describe('with an Addr inside the network range', function(){
+      it('returns true', function(){
+        assert(new Addr('10.0.0.0/16').contains(new Addr('10.0.3.0/24')));
+      });
+    });
+
+    describe('with an Addr larger than the network range', function(){
+      it('returns false', function(){
+        assert(!new Addr('10.0.0.0/24').contains(new Addr('10.0.0.3/16')));
+      });
+    });
+
+    describe('with an Addr outside the network range', function(){
+      it('returns false', function(){
+        assert(!new Addr('10.0.0.0/24').contains(new Addr('10.3.0.0/24')));
+      });
+    });
+  });
 });
