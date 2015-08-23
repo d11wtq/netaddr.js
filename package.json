@@ -1,10 +1,10 @@
 {
-  "name": "netip",
-  "version": "1.0.0",
+  "name": "netaddr",
+  "version": "0.1.0",
   "description": "Utility for IP addresses and CIDR expressions",
   "main": "index.js",
   "scripts": {
-    "test": "/bin/true"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
