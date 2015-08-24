@@ -1,5 +1,8 @@
 # netaddr.js
 
+[![Build Status](https://travis-ci.org/d11wtq/netaddr.js.svg?branch=master)]
+(https://travis-ci.org/d11wtq/netaddr.js)
+
 Node.js utility package for working with IP addresses and CIDR ranges.
 
 ## Installation
