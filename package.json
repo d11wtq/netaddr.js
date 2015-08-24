@@ -1,6 +1,6 @@
 {
   "name": "netaddr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility for IP addresses and CIDR expressions",
   "main": "index.js",
   "scripts": {
