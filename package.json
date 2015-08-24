@@ -1,6 +1,6 @@
 {
   "name": "netaddr",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Utility for IP addresses and CIDR expressions",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,6 @@
   "keywords": [
     "ip",
     "ipv4",
-    "ipv6",
     "cidr",
     "subnet"
   ],

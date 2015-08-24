@@ -46,6 +46,12 @@ localhost.decrement();
 
 Attempts to create an invalid `Addr` will throw an `Error`.
 
+## Limitations
+
+Currently only IPv4 is supported, though there are plans to add IPv6 support.
+This is complicated by the fact JavaScript does not support 64-bit integers,
+let alone 128-bit integers.
+
 ## Copyright & License
 
 Copyright © 2015 Chris Corbyn. See the LICENSE file for details.

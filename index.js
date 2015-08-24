@@ -21,15 +21,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-'use strict';
 
 */
+
+'use strict';
 
 var AddrV4 = require('./lib/addrv4').Addr;
 
 module.exports = {
   /*! Implementation of IPv4/CIDR */
   AddrV4: AddrV4,
-  /*! Wrapper class to implement both IPv4 and IPv6 */
+  /*! Wrapper class to eventually implement both IPv4 and IPv6 */
   Addr: AddrV4,
 };
