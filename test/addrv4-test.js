@@ -107,6 +107,12 @@ describe('addrv4', function(){
     });
   });
 
+  describe('#mask()', function(){
+    it('returns the address masked with a new prefix', function(){
+      assert.equal('10.1.0.0/16', Addr('10.1.3.57/32').mask(16).toString());
+    });
+  });
+
   describe('#equals', function(){
     describe('with the same address and prefix', function(){
       it('returns true', function(){
@@ -313,6 +319,24 @@ describe('addrv4', function(){
           Addr('10.0.2.0/24').decrement().toString()
         );
       });
+    });
+  });
+
+  describe('#nextSibling()', function(){
+    it('returns adjacent subnet', function(){
+      assert.equal(
+        '10.2.0.0/16',
+        Addr('10.1.0.0/16').nextSibling().toString()
+      );
+    });
+  });
+
+  describe('#prevSibling()', function(){
+    it('returns adjacent subnet', function(){
+      assert.equal(
+        '9.255.0.0/16',
+        Addr('10.0.0.0/16').prevSibling().toString()
+      );
     });
   });
 });

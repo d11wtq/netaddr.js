@@ -31,6 +31,9 @@ var network = subnet.network();
 // Get the broadcast address
 var broadcast = subnet.broadcast();
 
+// Mask the address with a new prefix
+var masked = subnet.mask(24);
+
 // Check if one CIDR contains another CIDR or IP
 subnet.contains(Addr('10.0.3.0/24')); // true
 
@@ -42,6 +45,12 @@ localhost.increment();
 
 // Decrement an address (non-mutating)
 localhost.decrement();
+
+// Find the next adjacent subnet
+subnet.nextSibling();
+
+// Find the previous adjacent subnet
+subnet.prevSibling();
 ```
 
 Attempts to create an invalid `Addr` will throw an `Error`.
