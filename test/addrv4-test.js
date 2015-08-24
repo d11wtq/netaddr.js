@@ -8,55 +8,55 @@ describe('addrv4', function(){
   describe('constructor', function(){
     describe('with a valid dotted IP', function(){
       it('succeeds', function(){
-        assert(new Addr('1.1.1.1'));
+        assert(Addr('1.1.1.1'));
       });
     });
 
     describe('with a valid CIDR', function(){
       it('succeeds', function(){
-        assert(new Addr('1.1.1.1/8'));
+        assert(Addr('1.1.1.1/8'));
       });
     });
 
     describe('with a valid integer', function(){
       it('succeeds', function(){
-        assert(new Addr(128));
+        assert(Addr(128));
       });
     });
 
     describe('with an invalid byte', function(){
       it('throws an error', function(){
-        assert.throws(function(){ new Addr('1.256.1.1'); });
+        assert.throws(function(){ Addr('1.256.1.1'); });
       });
     });
 
     describe('with a cidr prefix out of range', function(){
       it('throws an error', function(){
-        assert.throws(function(){ new Addr('1.1.1.1/35'); });
+        assert.throws(function(){ Addr('1.1.1.1/35'); });
       });
     });
 
     describe('with a negative integer', function(){
       it('throws an error', function(){
-        assert.throws(function(){ new Addr(-128); });
+        assert.throws(function(){ Addr(-128); });
       });
     });
 
     describe('with a 64 bit integer', function(){
       it('throws an error', function(){
-        assert.throws(function(){ new Addr(0xFFFFFFFF + 1); });
+        assert.throws(function(){ Addr(0xFFFFFFFF + 1); });
       });
     });
 
     describe('with a negative prefix', function(){
       it('throws an error', function(){
-        assert.throws(function(){ new Addr(256, -24); });
+        assert.throws(function(){ Addr(256, -24); });
       });
     });
 
     describe('with a prefix more than 32 bits', function(){
       it('throws an error', function(){
-        assert.throws(function(){ new Addr(256, 35); });
+        assert.throws(function(){ Addr(256, 35); });
       });
     });
   });
@@ -64,13 +64,13 @@ describe('addrv4', function(){
   describe('#octets', function(){
     describe('with a string', function(){
       it('returns the parsed octets', function(){
-        assert.deepEqual([10, 0, 52, 138], new Addr('10.0.52.138').octets);
+        assert.deepEqual([10, 0, 52, 138], Addr('10.0.52.138').octets);
       });
     });
 
     describe('with a number', function(){
       it('returns the computed octets', function(){
-        assert.deepEqual([127, 0, 0, 1], new Addr(2130706433).octets);
+        assert.deepEqual([127, 0, 0, 1], Addr(2130706433).octets);
       });
     });
   });
@@ -78,32 +78,32 @@ describe('addrv4', function(){
   describe('#prefix', function(){
     describe('when part of the cidr', function(){
       it('returns the decimal value', function(){
-        assert.equal(24, new Addr('1.1.1.1/24').prefix);
+        assert.equal(24, Addr('1.1.1.1/24').prefix);
       });
     });
 
     describe('when explicitly provided', function(){
       it('returns the decimal value', function(){
-        assert.equal(22, new Addr('1.1.1.1/24', 22).prefix);
+        assert.equal(22, Addr('1.1.1.1/24', 22).prefix);
       });
     });
 
     describe('when unspecified', function(){
       it('returns 32', function(){
-        assert.equal(32, new Addr('1.1.1.1').prefix);
+        assert.equal(32, Addr('1.1.1.1').prefix);
       });
     });
   });
 
   describe('#toInt()', function(){
     it('returns the numeric value', function(){
-      assert.deepEqual(2130706433, new Addr('127.0.0.1').toInt());
+      assert.deepEqual(2130706433, Addr('127.0.0.1').toInt());
     });
   });
 
   describe('#toString()', function(){
     it('returns the dotted notation with the prefix', function(){
-      assert.equal('127.0.0.1/18', new Addr(2130706433, 18).toString());
+      assert.equal('127.0.0.1/18', Addr(2130706433, 18).toString());
     });
   });
 
@@ -111,8 +111,8 @@ describe('addrv4', function(){
     describe('with the same address and prefix', function(){
       it('returns true', function(){
         assert(
-          new Addr('127.0.0.1/16')
-            .equals(new Addr(2130706433, 16))
+          Addr('127.0.0.1/16')
+            .equals(Addr(2130706433, 16))
         );
       });
     });
@@ -120,8 +120,8 @@ describe('addrv4', function(){
     describe('with a different address', function(){
       it('returns false', function(){
         assert(
-          !new Addr('127.0.0.1/16')
-            .equals(new Addr(2000000000, 16))
+          !Addr('127.0.0.1/16')
+            .equals(Addr(2000000000, 16))
         );
       });
     });
@@ -129,15 +129,15 @@ describe('addrv4', function(){
     describe('with a different prefix', function(){
       it('returns false', function(){
         assert(
-          !new Addr('127.0.0.1/16')
-            .equals(new Addr(2130706433, 15))
+          !Addr('127.0.0.1/16')
+            .equals(Addr(2130706433, 15))
         );
       });
     });
 
     describe('with a non Addr', function(){
       it('returns false', function(){
-        assert(!new Addr('127.0.0.1/16').equals(42));
+        assert(!Addr('127.0.0.1/16').equals(42));
       });
     });
   });
@@ -147,7 +147,7 @@ describe('addrv4', function(){
       it('returns the Addr of the mask', function(){
         assert.equal(
           '0.0.0.0/32',
-          new Addr('1.1.1.1/0').netmask().toString()
+          Addr('1.1.1.1/0').netmask().toString()
         );
       });
     });
@@ -156,7 +156,7 @@ describe('addrv4', function(){
       it('returns the Addr of the mask', function(){
         assert.equal(
           '255.255.255.255/32',
-          new Addr('1.1.1.1/32').netmask().toString()
+          Addr('1.1.1.1/32').netmask().toString()
         );
       });
     });
@@ -165,7 +165,7 @@ describe('addrv4', function(){
       it('returns the Addr of the mask', function(){
         assert.equal(
           '255.255.252.0/32',
-          new Addr('1.1.1.1/22').netmask().toString()
+          Addr('1.1.1.1/22').netmask().toString()
         );
       });
     });
@@ -176,7 +176,7 @@ describe('addrv4', function(){
       it('returns the Addr of the network', function(){
         assert.equal(
           '0.0.0.0/32',
-          new Addr('1.1.1.1/0').network().toString()
+          Addr('1.1.1.1/0').network().toString()
         );
       });
     });
@@ -185,7 +185,7 @@ describe('addrv4', function(){
       it('returns the Addr of the network', function(){
         assert.equal(
           '1.1.1.1/32',
-          new Addr('1.1.1.1/32').network().toString()
+          Addr('1.1.1.1/32').network().toString()
         );
       });
     });
@@ -194,7 +194,7 @@ describe('addrv4', function(){
       it('returns the Addr of the network', function(){
         assert.equal(
           '10.3.0.0/32',
-          new Addr('10.3.0.1/16').network().toString()
+          Addr('10.3.0.1/16').network().toString()
         );
       });
     });
@@ -205,7 +205,7 @@ describe('addrv4', function(){
       it('returns the Addr of the broadcast address', function(){
         assert.equal(
           '255.255.255.255/32',
-          new Addr('1.1.1.1/0').broadcast().toString()
+          Addr('1.1.1.1/0').broadcast().toString()
         );
       });
     });
@@ -214,7 +214,7 @@ describe('addrv4', function(){
       it('returns the Addr of the broadcast address', function(){
         assert.equal(
           '1.1.1.1/32',
-          new Addr('1.1.1.1/32').broadcast().toString()
+          Addr('1.1.1.1/32').broadcast().toString()
         );
       });
     });
@@ -223,7 +223,7 @@ describe('addrv4', function(){
       it('returns the Addr of the broadcast address', function(){
         assert.equal(
           '10.3.255.255/32',
-          new Addr('10.3.0.1/16').broadcast().toString()
+          Addr('10.3.0.1/16').broadcast().toString()
         );
       });
     });
@@ -232,19 +232,19 @@ describe('addrv4', function(){
   describe('#contains()', function(){
     describe('with an Addr inside the network range', function(){
       it('returns true', function(){
-        assert(new Addr('10.0.0.0/16').contains(new Addr('10.0.3.0/24')));
+        assert(Addr('192.168.1.0/16').contains(Addr('192.168.3.0/24')));
       });
     });
 
     describe('with an Addr larger than the network range', function(){
       it('returns false', function(){
-        assert(!new Addr('10.0.0.0/24').contains(new Addr('10.0.0.3/16')));
+        assert(!Addr('192.168.1.0/24').contains(Addr('192.168.1.0/16')));
       });
     });
 
     describe('with an Addr outside the network range', function(){
       it('returns false', function(){
-        assert(!new Addr('10.0.0.0/24').contains(new Addr('10.3.0.0/24')));
+        assert(!Addr('192.168.1.0/24').contains(Addr('192.168.2.0/24')));
       });
     });
   });
@@ -254,7 +254,7 @@ describe('addrv4', function(){
       it('returns the other Addr', function(){
         assert.equal(
           '10.0.3.0/24',
-          new Addr('10.0.0.0/16').intersect(new Addr('10.0.3.0/24')).toString()
+          Addr('10.0.0.0/16').intersect(Addr('10.0.3.0/24')).toString()
         );
       });
     });
@@ -263,7 +263,7 @@ describe('addrv4', function(){
       it('returns self', function(){
         assert.equal(
           '10.0.3.0/24',
-          new Addr('10.0.3.0/24').intersect(new Addr('10.0.0.0/16')).toString()
+          Addr('10.0.3.0/24').intersect(Addr('10.0.0.0/16')).toString()
         );
       });
     });
@@ -272,7 +272,7 @@ describe('addrv4', function(){
       it('returns undefined', function(){
         assert.equal(
           'undefined',
-          typeof new Addr('10.0.0.0/24').intersect(new Addr('10.3.0.0/24'))
+          typeof Addr('10.0.0.0/24').intersect(Addr('10.3.0.0/24'))
         );
       });
     });
@@ -282,7 +282,7 @@ describe('addrv4', function(){
     describe('with the maximum address', function(){
       it('throws an error', function(){
         assert.throws(function(){
-          new Addr('255.255.255.255/24').increment();
+          Addr('255.255.255.255/24').increment();
         });
       });
     });
@@ -291,7 +291,7 @@ describe('addrv4', function(){
       it('returns the next address', function(){
         assert.equal(
           '10.0.2.0/24',
-          new Addr('10.0.1.255/24').increment().toString()
+          Addr('10.0.1.255/24').increment().toString()
         );
       });
     });
@@ -301,7 +301,7 @@ describe('addrv4', function(){
     describe('with the minimum address', function(){
       it('throws an error', function(){
         assert.throws(function(){
-          new Addr('0.0.0.0/24').decrement();
+          Addr('0.0.0.0/24').decrement();
         });
       });
     });
@@ -310,7 +310,7 @@ describe('addrv4', function(){
       it('returns the previous address', function(){
         assert.equal(
           '10.0.1.255/24',
-          new Addr('10.0.2.0/24').decrement().toString()
+          Addr('10.0.2.0/24').decrement().toString()
         );
       });
     });
